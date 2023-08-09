@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Login</title>
 
-<link href=" {{BASE_URL.'public/css/bootstrap.min.css'}}" rel="stylesheet">
-<link href=" {{BASE_URL.'public/css/datepicker3.css'}} " rel="stylesheet">
-<link href="{{BASE_URL.'public/css/bootstrap-table.css'}}" rel="stylesheet">
-<link href="{{BASE_URL.'public/css/styles.css'}}" rel="stylesheet">
+<link href=" <?php echo e(BASE_URL.'public/css/bootstrap.min.css'); ?>" rel="stylesheet">
+<link href=" <?php echo e(BASE_URL.'public/css/datepicker3.css'); ?> " rel="stylesheet">
+<link href="<?php echo e(BASE_URL.'public/css/bootstrap-table.css'); ?>" rel="stylesheet">
+<link href="<?php echo e(BASE_URL.'public/css/styles.css'); ?>" rel="stylesheet">
 
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
@@ -34,10 +34,10 @@
 				</div>
 				
 				<div class="panel-body">
-					@if (isset($_SESSION['error_login']))
-						<div class="alert alert-danger"> {{$_SESSION['error_login']}} </div>
-					@endif
-					{{-- <div class="alert alert-danger">Tài khoản không hợp lệ !</div> --}}
+					<?php if(isset($_SESSION['error_login'])): ?>
+						<div class="alert alert-danger"> <?php echo e($_SESSION['error_login']); ?> </div>
+					<?php endif; ?>
+					
 					<form action="" role="form" method="post">
 						<fieldset>
 							<div class="form-group">
@@ -46,11 +46,7 @@
 							<div class="form-group">
 								<input class="form-control" placeholder="Mật khẩu" name="password" type="password" value="">
 							</div>
-							{{-- <div class="checkbox">
-								<label>
-									<input name="remember" type="checkbox" value="Remember Me">Nhớ tài khoản
-								</label>
-							</div> --}}
+							
 							<button type="submit" class="btn btn-primary">Đăng nhập</button>
 						</fieldset>
 					</form>
@@ -61,6 +57,7 @@
 </body>
 
 </html>
-@php
+<?php
 	unset($_SESSION['error_login']);
-@endphp
+?>
+<?php /**PATH C:\xampp\htdocs\php2\app\views/login/index.blade.php ENDPATH**/ ?>

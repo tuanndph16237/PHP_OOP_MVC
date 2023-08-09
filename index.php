@@ -16,6 +16,10 @@
     if(isset($_SESSION['email']) && isset($_SESSION['password'])){
         switch ($url) {
             case '/':
+                header('location: '.BASE_URL .'dashboard');
+            break;
+
+            case '/dashboard':
                 $ctr = new HomeController;
                 $ctr->index();
             break;

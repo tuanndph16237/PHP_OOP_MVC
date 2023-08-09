@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>
-	@yield('title')
+	<?php echo $__env->yieldContent('title'); ?>
 </title>
 
-@include('layouts.style')
-@include('layouts.icon')
+<?php echo $__env->make('layouts.style', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.icon', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!--[if lt IE 9]>
 <script src="http://localhost/ass_php2/public/js/html5shiv.js"></script>
@@ -32,8 +32,8 @@
 							<li class="dropdown pull-right">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Admin <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									{{-- <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Hồ sơ</a></li> --}}
-									<li><a href=" {{BASE_URL.'logout'}} "><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
+									
+									<li><a href=" <?php echo e(BASE_URL.'logout'); ?> "><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Đăng xuất</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -43,10 +43,11 @@
                 <!-- /.container-fluid -->
 			</nav>
 		
-	@include('layouts.slibar')
+	<?php echo $__env->make('layouts.slibar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 		
-	@yield('content')
+	<?php echo $__env->yieldContent('content'); ?>
     
-    @include('layouts.script')
+    <?php echo $__env->make('layouts.script', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\php2\app\views/layouts/main.blade.php ENDPATH**/ ?>

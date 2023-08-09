@@ -6,7 +6,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => '127.0.0.1',
-    'database'  => 'kaopiz',
+    'database'  => 'php2',
     'username'  => 'root',
     'password'  => '',
     'charset'   => 'utf8mb4',

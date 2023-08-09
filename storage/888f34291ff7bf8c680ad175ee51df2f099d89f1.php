@@ -1,7 +1,7 @@
-@extends('layouts.main')
-@section('title', 'Quản lý danh mục')
 
-@section('content')
+<?php $__env->startSection('title', 'Quản lý danh mục'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="row">
             <ol class="breadcrumb">
@@ -30,7 +30,7 @@
                             <div class="fixed-table-toolbar">
                                 <div class="bars pull-left" style="display: flex;">
                                     <div id="toolbar" class="btn-group" style="margin-right: 74px">
-                                        <a href=" {{BASE_URL.'add-cate'}} " class="btn btn-success">
+                                        <a href=" <?php echo e(BASE_URL.'add-cate'); ?> " class="btn btn-success">
                                             <i class="glyphicon glyphicon-plus"></i> Thêm danh mục
                                         </a>
                                     </div>
@@ -41,9 +41,9 @@
                                 </div>
                             </div>
                             <div style="clear: both; margin: 10px 0;" class="text-success">
-                                @if (isset($_POST['keyword']))
-                                    <p style="font-size: 16px">Tìm thấy {{count($categories)}} danh mục</p>
-                                @endif
+                                <?php if(isset($_POST['keyword'])): ?>
+                                    <p style="font-size: 16px">Tìm thấy <?php echo e(count($categories)); ?> danh mục</p>
+                                <?php endif; ?>
                             </div>
                             <div class="fixed-table-container">
                                 <div class="fixed-table-header">
@@ -77,64 +77,66 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($categories as $category)
+                                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr data-index="0">
-                                                    <td style=""> {{$category->id}} </td>
-                                                    <td style="">{{$category->cate_name}}</td>
-                                                    <td style="">{{count($category->products)}}</td>
+                                                    <td style=""> <?php echo e($category->id); ?> </td>
+                                                    <td style=""><?php echo e($category->cate_name); ?></td>
+                                                    <td style=""><?php echo e(count($category->products)); ?></td>
                                                     <td style="">
-                                                        @if ($category->show_menu == 1)
+                                                        <?php if($category->show_menu == 1): ?>
                                                             <span class="label label-success">
                                                                 có
                                                             </span>
-                                                        @else
+                                                        <?php else: ?>
                                                             <span class="label label-danger">
                                                                 không
                                                             </span>
-                                                        @endif
+                                                        <?php endif; ?>
                                                         
                                                     </td>
                                                     <td class="form-group" style="">
-                                                        <a href=" {{BASE_URL.'edit-cate&id='.$category->id}} " class="btn btn-primary"><i class="fas fa-pen"></i></a>
-                                                        <a onclick="return del( '{{$category->cate_name}}' );" href="{{BASE_URL.'del-cate&id='.$category->id}}" class="btn btn-danger"><i class="fas fa-times"></i></a>
+                                                        <a href=" <?php echo e(BASE_URL.'edit-cate&id='.$category->id); ?> " class="btn btn-primary"><i class="fas fa-pen"></i></a>
+                                                        <a onclick="return del( '<?php echo e($category->cate_name); ?>' );" href="<?php echo e(BASE_URL.'del-cate&id='.$category->id); ?>" class="btn btn-danger"><i class="fas fa-times"></i></a>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="fixed-table-pagination"></div>
                             </div>
-                            @if (isset($_POST['keyword']))
-                                <a style="display: inline-block; margin-top: 12px" class="btn btn-primary" href="{{BASE_URL.'category?page=1'}} ">Tất cả danh mục</a>
+                            <?php if(isset($_POST['keyword'])): ?>
+                                <a style="display: inline-block; margin-top: 12px" class="btn btn-primary" href="<?php echo e(BASE_URL.'category?page=1'); ?> ">Tất cả danh mục</a>
                                 
-                            @endif
+                            <?php endif; ?>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    @if (!isset($_POST['keyword']))
+                    <?php if(!isset($_POST['keyword'])): ?>
                         <div class="panel-footer">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="{{BASE_URL.'category?page='.$pagePrev}}">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="<?php echo e(BASE_URL.'category?page='.$pagePrev); ?>">«</a></li>
 
-                                    <li class="page-item @if ($_GET['page'] == 1 || !isset($_GET['page']))
+                                    <li class="page-item <?php if($_GET['page'] == 1 || !isset($_GET['page'])): ?>
                                     active
-                                    @endif"><a class="page-link" href="{{BASE_URL.'category?page=1'}}">1</a></li>
-                                    @for ($i = 2; $i <= $totalPage; $i++)
-                                        <li class="page-item @if ($_GET['page']==$i)
+                                    <?php endif; ?>"><a class="page-link" href="<?php echo e(BASE_URL.'category?page=1'); ?>">1</a></li>
+                                    <?php for($i = 2; $i <= $totalPage; $i++): ?>
+                                        <li class="page-item <?php if($_GET['page']==$i): ?>
                                             active
-                                        @endif"><a class="page-link" href="{{BASE_URL.'category?page='.$i}} ">{{$i}} </a></li>
-                                    @endfor
+                                        <?php endif; ?>"><a class="page-link" href="<?php echo e(BASE_URL.'category?page='.$i); ?> "><?php echo e($i); ?> </a></li>
+                                    <?php endfor; ?>
                                     
-                                    <li class="page-item"><a class="page-link" href="{{BASE_URL.'category?page='.$pageNext}}">»</a></li>
+                                    <li class="page-item"><a class="page-link" href="<?php echo e(BASE_URL.'category?page='.$pageNext); ?>">»</a></li>
                                 </ul>
                             </nav>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
         <!--/.row-->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\php2\app\views/categories/index.blade.php ENDPATH**/ ?>

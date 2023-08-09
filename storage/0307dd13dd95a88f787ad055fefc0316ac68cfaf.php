@@ -1,7 +1,7 @@
-@extends('layouts.main')
-@section('title', 'Thêm tài khoản')
 
-@section('content')
+<?php $__env->startSection('title', 'Thêm tài khoản'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="row">
             <ol class="breadcrumb">
@@ -28,10 +28,10 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-8">
-                            @if (isset($_SESSION['error']))
-                            <div class="alert alert-danger"> {{$_SESSION['error']}} </div>
-                            @endif
-                            <form id="add-user" action=" {{BASE_URL.'save-add-user'}} " role="form" method="post" enctype="multipart/form-data">
+                            <?php if(isset($_SESSION['error'])): ?>
+                            <div class="alert alert-danger"> <?php echo e($_SESSION['error']); ?> </div>
+                            <?php endif; ?>
+                            <form id="add-user" action=" <?php echo e(BASE_URL.'save-add-user'); ?> " role="form" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>Họ &amp; Tên</label>
                                     <input id="name" name="name" class="form-control" placeholder="">
@@ -69,9 +69,12 @@
         </div>
         <!-- /.row -->
     </div>
-@endsection
-@if (isset($_SESSION['error']))
-    @php
+<?php $__env->stopSection(); ?>
+<?php if(isset($_SESSION['error'])): ?>
+    <?php
         unset($_SESSION['error']);
-    @endphp
-@endif
+    ?>
+<?php endif; ?>
+
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\php2\app\views/users/add.blade.php ENDPATH**/ ?>

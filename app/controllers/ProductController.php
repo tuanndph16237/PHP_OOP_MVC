@@ -35,7 +35,7 @@ class ProductController extends BaseController{
             $products = Product::where('name', 'like', "%$keyword%")->get();
             $this->view('products.index', compact('products','totalPage','pagePrev','pageNext'));
         }else{
-            $products = Product::limit($rowsPerPage)->skip($start)->get();
+            $products = Product::limit($rowsPerPage)->skip($start)->latest()->get();
             $this->view('products.index', compact('products','totalPage','pagePrev','pageNext'));
         }
         
@@ -54,7 +54,7 @@ class ProductController extends BaseController{
         $path ="./public/images/products/".$_FILES['image']['name'];
         move_uploaded_file($file, $path);
         $product->save();
-        header('location: '.BASE_URL.'product');
+        header('location: '.BASE_URL.'product?page=1');
     }
 
     public function edit(){
@@ -85,7 +85,7 @@ class ProductController extends BaseController{
             
             $product->save();
         }   
-        header('location: '.BASE_URL.'product');
+        header('location: '.BASE_URL.'product?page=1');
     }
 
     public function destroy(){
@@ -94,7 +94,7 @@ class ProductController extends BaseController{
         if($product){
             $product->delete();
         }
-        header('location: '.BASE_URL .'product');
+        header('location: '.BASE_URL .'product?page=1');
         
     }
 

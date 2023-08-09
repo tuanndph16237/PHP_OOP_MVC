@@ -50,7 +50,7 @@ class CategoryController extends BaseController{
         $model->fill($data);
 
         $model->save();
-        header('location: '.BASE_URL.'category');
+        header('location: '.BASE_URL.'category?page=1');
     }
 
     public function edit(){
@@ -72,7 +72,7 @@ class CategoryController extends BaseController{
             $model->fill($_POST);
             $model->save();
         }
-        header('location: '.BASE_URL.'category');
+        header('location: '.BASE_URL.'category?page=1');
     }
 
     public function destroy(){
@@ -87,7 +87,7 @@ class CategoryController extends BaseController{
             //thực hiện xóa danh mục
             $model->delete();
         }
-        header('location: '.BASE_URL.'category');
+        header('location: '.BASE_URL.'category?page=1');
     }
 
 }

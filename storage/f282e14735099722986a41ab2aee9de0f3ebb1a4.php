@@ -1,7 +1,7 @@
-@extends('layouts.main')
-@section('title', 'Danh sách sản phẩm')
 
-@section('content')
+<?php $__env->startSection('title', 'Danh sách sản phẩm'); ?>
+
+<?php $__env->startSection('content'); ?>
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="row">
             <ol class="breadcrumb">
@@ -31,7 +31,7 @@
                             <div class="fixed-table-toolbar">
                                 <div class="bars pull-left" style="display: flex;">
                                     <div class="btn-group" style="margin-right: 74px">
-                                        <a href=" {{BASE_URL.'add-product'}} " class="btn btn-success">
+                                        <a href=" <?php echo e(BASE_URL.'add-product'); ?> " class="btn btn-success">
                                             <i class="glyphicon glyphicon-plus"></i> Thêm sản phẩm
                                         </a>
                                     </div>
@@ -42,9 +42,9 @@
                                 </div>
                             </div>
                             <div style="clear: both; margin: 10px 0;" class="text-success">
-                                @if (isset($_POST['keyword']))
-                                    <p style="font-size: 16px">Tìm thấy {{count($products)}} sản phẩm</p>
-                                @endif
+                                <?php if(isset($_POST['keyword'])): ?>
+                                    <p style="font-size: 16px">Tìm thấy <?php echo e(count($products)); ?> sản phẩm</p>
+                                <?php endif; ?>
                             </div>
                             
                             <div class="fixed-table-container">
@@ -96,46 +96,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($products as $product)
+                                            <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr data-index="0">
-                                                    <td style=""> {{$product->id}}</td>
-                                                    <td style="">{{$product->name}}</td>
-                                                    <td style="">{{number_format($product->price)}} vnd</td>
+                                                    <td style=""> <?php echo e($product->id); ?></td>
+                                                    <td style=""><?php echo e($product->name); ?></td>
+                                                    <td style=""><?php echo e(number_format($product->price)); ?> vnd</td>
                                                     <td>
-                                                        <img src=" @php if (strlen(strstr($product->image, 'https')) > 0) {echo $product->image;} 
-                                                        else {echo './public/images/products/'.$product->image;} @endphp " width="160">
+                                                        <img src=" <?php if (strlen(strstr($product->image, 'https')) > 0) {echo $product->image;} 
+                                                        else {echo './public/images/products/'.$product->image;} ?> " width="160">
                                                     </td>
                                                     <td style="">
-                                                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#gallery-{{$product->id}}">
-                                                            {{count($product->galleries)}} ảnh
+                                                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#gallery-<?php echo e($product->id); ?>">
+                                                            <?php echo e(count($product->galleries)); ?> ảnh
                                                         </button>
                                                     </td>
-                                                    <td style="">{{$product->category->cate_name}}</td>
+                                                    <td style=""><?php echo e($product->category->cate_name); ?></td>
                                                     <td style="">
-                                                        {{$product->star}}
-                                                        {{-- <i class="fas fa-star"></i> --}}
+                                                        <?php echo e($product->star); ?>
+
+                                                        
                                                     </td>
-                                                    <td style="">{{$product->views}}</td>
+                                                    <td style=""><?php echo e($product->views); ?></td>
                                                     <td class="form-group" style="">
-                                                        <a href=" {{BASE_URL.'edit-product&id='.$product->id}} " class="btn btn-primary">
+                                                        <a href=" <?php echo e(BASE_URL.'edit-product&id='.$product->id); ?> " class="btn btn-primary">
                                                             <i class="fas fa-pen"></i>
                                                         </a>
-                                                        <a onclick="return del( '{{$product->name}}' )" href="{{BASE_URL.'del-product&id='.$product->id}}" class="btn btn-danger">
+                                                        <a onclick="return del( '<?php echo e($product->name); ?>' )" href="<?php echo e(BASE_URL.'del-product&id='.$product->id); ?>" class="btn btn-danger">
                                                             <i class="fas fa-times"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             
                                         </tbody>
                                     </table>
-                                    @foreach ($products as $product)
+                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <!-- Modal -->
-                                        <div class="modal fade" id="gallery-{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="gallery-<?php echo e($product->id); ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Ảnh của sản phẩm: <b>{{$product->name}}</b></h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Ảnh của sản phẩm: <b><?php echo e($product->name); ?></b></h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -143,64 +144,66 @@
                                             <div class="modal-body">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                    @if (count($product->galleries)==0)
+                                                    <?php if(count($product->galleries)==0): ?>
                                                         Không có ảnh nào đâu!
-                                                    @else
-                                                        @foreach ($product->galleries as $gallery)
+                                                    <?php else: ?>
+                                                        <?php $__currentLoopData = $product->galleries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gallery): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <div class="col-md-4" style="margin-bottom: 4px; max-height: 180px; overflow: hidden;">
-                                                                {{-- <img src="{{$gallery->img_url}}" width="100%"> --}}
-                                                                <img style="border: 1px solid #ccc; border-radius: 4px" src=" @php if (strlen(strstr($gallery->img_url, 'https')) > 0) {echo $gallery->img_url;} 
-                                                                else {echo './public/images/products/'.$gallery->img_url;} @endphp " width="100%">
+                                                                
+                                                                <img style="border: 1px solid #ccc; border-radius: 4px" src=" <?php if (strlen(strstr($gallery->img_url, 'https')) > 0) {echo $gallery->img_url;} 
+                                                                else {echo './public/images/products/'.$gallery->img_url;} ?> " width="100%">
                                                             </div>
-                                                        @endforeach
-                                                    @endif
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php endif; ?>
                                                     
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <a href={{BASE_URL . 'gallery?prd_id=' . $product->id}} class="btn btn-primary">Chi tiết</a>
+                                            <a href=<?php echo e(BASE_URL . 'gallery?prd_id=' . $product->id); ?> class="btn btn-primary">Chi tiết</a>
                                             </div>
                                         </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="search-product" value="{{BASE_URL . 'api/search-product'}}"/>
-                                    @endforeach
+                                    <input type="hidden" id="search-product" value="<?php echo e(BASE_URL . 'api/search-product'); ?>"/>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                                 <div class="fixed-table-pagination"></div>
                             </div>
-                            @if (isset($_POST['keyword']))
-                                <a style="display: inline-block; margin-top: 12px" class="btn btn-primary" href="{{BASE_URL.'product?page=1'}} ">Tất cả sản phẩm</a>
+                            <?php if(isset($_POST['keyword'])): ?>
+                                <a style="display: inline-block; margin-top: 12px" class="btn btn-primary" href="<?php echo e(BASE_URL.'product?page=1'); ?> ">Tất cả sản phẩm</a>
                                 
-                            @endif
+                            <?php endif; ?>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    @if (!isset($_POST['keyword']))
+                    <?php if(!isset($_POST['keyword'])): ?>
                         <div class="panel-footer">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="{{BASE_URL.'product?page='.$pagePrev}}">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="<?php echo e(BASE_URL.'product?page='.$pagePrev); ?>">«</a></li>
 
-                                    <li class="page-item @if ($_GET['page'] == 1 || !isset($_GET['page']))
+                                    <li class="page-item <?php if($_GET['page'] == 1 || !isset($_GET['page'])): ?>
                                     active
-                                    @endif"><a class="page-link" href="{{BASE_URL.'product?page=1'}}">1</a></li>
+                                    <?php endif; ?>"><a class="page-link" href="<?php echo e(BASE_URL.'product?page=1'); ?>">1</a></li>
 
-                                    @for ($i = 2; $i <= $totalPage; $i++)
-                                        <li class="page-item @if ($_GET['page']==$i)
+                                    <?php for($i = 2; $i <= $totalPage; $i++): ?>
+                                        <li class="page-item <?php if($_GET['page']==$i): ?>
                                             active
-                                        @endif"><a class="page-link" href="{{BASE_URL.'product?page='.$i}} ">{{$i}} </a></li>
-                                    @endfor
+                                        <?php endif; ?>"><a class="page-link" href="<?php echo e(BASE_URL.'product?page='.$i); ?> "><?php echo e($i); ?> </a></li>
+                                    <?php endfor; ?>
                                     
-                                    <li class="page-item"><a class="page-link" href="{{BASE_URL.'product?page='.$pageNext}}">»</a></li>
+                                    <li class="page-item"><a class="page-link" href="<?php echo e(BASE_URL.'product?page='.$pageNext); ?>">»</a></li>
                                 </ul>
                             </nav>
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
         <!--/.row-->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\php2\app\views/products/index.blade.php ENDPATH**/ ?>

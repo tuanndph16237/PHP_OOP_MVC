@@ -8,10 +8,10 @@
         Hihi...Xin chào!😄😄
     </div>
     <ul class="nav menu">
-        <li class="@if ($_REQUEST['url']==null)
+        <li class="@if ($_REQUEST['url']=='dashboard')
         active
     @endif">
-            <a href="{{BASE_URL}}">
+            <a href="{{BASE_URL.'dashboard'}}">
                 <svg class="glyph stroked dashboard-dial">
                     <use xlink:href="#stroked-dashboard-dial"></use>
                 </svg>
@@ -21,7 +21,7 @@
         <li class="@if ($_REQUEST['url']=='category' || $_REQUEST['url']=='add-cate' || $_REQUEST['url']=='edit-cate')
             active
         @endif">
-            <a href="{{BASE_URL.'category'}}">
+            <a href="{{BASE_URL.'category?page=1'}}">
                 <svg class="glyph stroked open folder">
                     <use xlink:href="#stroked-open-folder" />
                 </svg>
@@ -33,7 +33,7 @@
         || $_REQUEST['url']=='edit-gallery')
             active
         @endif">
-            <a href="{{BASE_URL.'product'}}">
+            <a href="{{BASE_URL.'product?page=1'}}">
                 <svg class="glyph stroked bag">
                     <use xlink:href="#stroked-bag"></use>
                 </svg>

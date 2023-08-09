@@ -1,3 +1,3 @@
 <?php
-const BASE_URL = "http://localhost/ass_php2/";
+const BASE_URL = "http://localhost/php2/";
 ?>
